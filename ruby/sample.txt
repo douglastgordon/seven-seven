@@ -1,0 +1,8 @@
+this is NOT a totally
+normal sample text (NOT)
+where I'm looking
+for lines with the word
+NOT in them
+and I'm NO
+T looking for lines
+without the word NOT
