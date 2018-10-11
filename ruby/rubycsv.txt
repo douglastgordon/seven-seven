@@ -1,0 +1,7 @@
+one, two
+eins, zwei
+un, deux
+uno, duo
+|, ||
+1, 10
+I, II
