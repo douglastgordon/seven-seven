@@ -21,10 +21,19 @@ TwoD get := method(x, y,
   (self value) at(y) at(x)
 )
 
+TwoD transpose := method(
+  self value = (value at(0)) map (i, x, value map (el, el at(i)))
+)
+
 a := TwoD clone
 # a self println
-a dim(4, 4)
+a dim(2, 2)
 a value println
-a set(2, 2, 2)
+a set(0, 0, 1)
+a set(0, 1, 2)
+a set(1, 0, 3)
+a set(1, 1, 4)
 a value println
-a get(2, 2) println
+a get(1, 1) println
+a transpose
+a value println
