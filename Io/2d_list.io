@@ -37,3 +37,15 @@ a value println
 a get(1, 1) println
 a transpose
 a value println
+
+f := File with("matrix.txt")
+f openForUpdating
+f write(a serialized)
+f close
+
+f := File with("matrix.txt")
+f openForReading
+text := f readToEnd
+b := doString(text)
+b get(1, 1) println
+f close
