@@ -28,7 +28,21 @@ mySmallest([Head|[Second|[]]], Smaller) :- Head > Second, Smaller is Second.
 mySmallest([Head|[Second|[]]], Smaller) :- Head =< Second, Smaller is Head.
 mySmallest([Head|Tail], Smallest) :- mySmallest(Tail, Smaller), mySmallest([Smaller, Head], Smallest).
 
-mySort([Head|[]], [Head]).
-mySort([Head,[Second|[]]], Sorted) :- Second < Head, Sorted is [Second, Head].
-mySort([Head,[Second|[]]], Sorted) :- Second >= Head, Sorted is [Head, Second].
-mySort([Head, Tail], Sorted) :-
+sorted([], []).
+sorted([X], [X]).
+sorted(List, Sorted) :-
+  halve(List, L1, L2),
+  sorted(L1, Sorted1), sorted(L2, Sorted2),
+  merged(Sorted1, Sorted2, Sorted).
+
+
+merged([],L,L).
+merged(L,[],L).
+merged([X|T1],[Y|T2],[X|T]) :- X =< Y, merged(T1, [Y|T2], T).
+merged([X|T1],[Y|T2],[Y|T]) :- X > Y, merged([X|T1], T2, T).
+
+halve(L,A,B):-hv(L,[],A,B).
+
+hv(L,L,[],L).      % for lists of even length
+hv(L,[_|L],[],L).  % for lists of odd length
+hv([H|T],Acc,[H|L],B):-hv(T,[_|Acc],L,B).
