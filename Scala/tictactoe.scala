@@ -3,7 +3,7 @@ val scanner = new java.util.Scanner(System.in)
 class Board() {
   val xToken = "X"
   val oToken = "O"
-  var currentPlayer = xToken
+  var currentPlayer = oToken
   var winningX = List(xToken, xToken, xToken)
   var winningO = List(oToken, oToken, oToken)
   var grid = List(
@@ -16,15 +16,20 @@ class Board() {
     println("Let's play tic-tac-toe!")
     var won = false
     var tied = false
-    while(!won || tied) {
+    while(!is_won && !is_tie) {
+      switch_player
       print_board
       println("It's " + currentPlayer + "'s turn.")
       val position = scanner.nextLine().split(" ")
       var x = position(0).toInt
       var y = position(1).toInt
-      grid(x)(y) = currentPlayer
+      grid = grid.zipWithIndex.map( { case (row, xIdx) =>
+        if (xIdx == x) row.zipWithIndex.map { case (e, i) => if (i == y) currentPlayer else e } else row
+      })
     }
+    if (is_won) println("Congratulations " + currentPlayer + "!") else println("It's a tie!")
   }
+
 
   def print_board() {
     grid.foreach {row =>
@@ -40,13 +45,13 @@ class Board() {
     }
   }
 
-  def is_won() {
+  def is_won() : Boolean = {
     val row1 = grid(0)
     val row2 = grid(1)
     val row3 = grid(2)
-    val col1 = List(grid(0)(0), grid(0)(1), grid(0)(2))
-    val col2 = List(grid(1)(0), grid(1)(1), grid(1)(2))
-    val col3 = List(grid(2)(0), grid(2)(1), grid(2)(2))
+    val col1 = List(grid(0)(0), grid(1)(0), grid(2)(0))
+    val col2 = List(grid(0)(1), grid(1)(1), grid(2)(1))
+    val col3 = List(grid(0)(2), grid(1)(2), grid(2)(2))
     val diag1 = List(grid(0)(0), grid(1)(1), grid(1)(1))
     val diag2 = List(grid(0)(2), grid(1)(1), grid(2)(0))
 
